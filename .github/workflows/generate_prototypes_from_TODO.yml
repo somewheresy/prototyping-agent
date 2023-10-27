@@ -26,3 +26,10 @@ jobs:
         run: python scripts/todo.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: Add generated prototypes
+          title: Add generated prototypes
+          branch: prototypes
