@@ -3,7 +3,6 @@ name: Generate Prototypes
 on:
   push:
     branches:
-      - main
       - dev
 
 jobs:
@@ -32,12 +31,16 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         continue-on-error: true
 
-      - name: Commit and Push
-     
+      - name: Create Pull Request using curl
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add -A
-          git diff --cached --exit-code || git commit -m "[Auto] Generate Prototypes for @TODO tasks in /prototypes"
-          git push origin ${{ github.head_ref }} || echo "No changes to commit."
-        
+          curl -s -X POST \
+          -H "Authorization: token $GITHUB_TOKEN" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/somewheresy/somewhere-prototyping-agent/pulls \
+          -d '{
+            "title": "Add prototypes based on @TODO",
+            "head": "prototyping",
+            "base": "dev"
+          }'
