@@ -26,7 +26,8 @@ jobs:
       - name: Run script
         id: runscript
         run: python scripts/todo.py
-        env: OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        env: 
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         continue-on-error: true
 
       - name: Create Pull Request
