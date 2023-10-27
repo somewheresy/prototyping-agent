@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}  # checkout the branch that triggered the workflow
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -26,7 +28,7 @@ jobs:
       - name: Run script
         id: runscript
         run: python scripts/todo.py
-        env: 
+        env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         continue-on-error: true
 
@@ -36,4 +38,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           git diff --cached --exit-code || git commit -m "[Auto] Generate Prototypes for @TODO tasks in /prototypes"
-          git push origin || echo "No changes to commit."
+          git push origin ${{ github.head_ref }} || echo "No changes to commit."
