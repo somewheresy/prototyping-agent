@@ -2,6 +2,8 @@
 
 This project is designed to automatically generate Python code prototypes to solve TODOs in a codebase. It uses OpenAI's GPT-4 model to generate the prototypes. The project is structured as a Python script that can be run locally or as a GitHub Action.
 
+@TODO: Test the feature and provide a Python program which creates a diagram for the program.
+
 ## File Structure
 
 - `scripts/todo.py`: This is the main script that scans the codebase for TODOs, generates prototypes for each TODO, and writes a markdown file with all the TODOs.
