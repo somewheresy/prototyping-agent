@@ -39,3 +39,5 @@ jobs:
           git add -A
           git diff --cached --exit-code || git commit -m "[Auto] Generate Prototypes for @TODO tasks in /prototypes"
           git push origin ${{ github.head_ref }} || echo "No changes to commit."
+          with:
+            token: ${{ secrets.PAT }}
