@@ -1,9 +1,10 @@
-name: Generate Prototypes
+name: Generate Prototypes and Create PR
 
 on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   generate_prototypes:
@@ -26,3 +27,17 @@ jobs:
         run: python scripts/todo.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "Add generated prototypes" || echo "No changes to commit."
+          git push origin HEAD:prototypes || echo "No changes to push."
+
+      - name: Create Pull Request
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d '{"head":"prototypes", "base":"main", "title":"New Prototypes", "body":"Generated new prototypes."}' \
+          "https://api.github.com/repos/${{ github.repository }}/pulls"
