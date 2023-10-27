@@ -4,8 +4,6 @@ This project is designed to automatically generate Python code prototypes to sol
 
 ## File Structure
 
-@TODO: Generate an example script
-
 - `scripts/todo.py`: This is the main script that scans the codebase for TODOs, generates prototypes for each TODO, and writes a markdown file with all the TODOs.
 - `run.py`: This script is a simple runner for `todo.py`.
 - `.github/workflows/generate_prototypes_from_TODO.yml`: This is a GitHub Action workflow that runs `todo.py` whenever there's a push to the main branch.

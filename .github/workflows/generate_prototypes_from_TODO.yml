@@ -35,9 +35,3 @@ jobs:
           git add -A
           git commit -m "Add generated prototypes" || echo "No changes to commit."
           git push origin HEAD:dev || echo "No changes to push."
-
-      - name: Create Pull Request
-        run: |
-          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -d '{"head":"prototypes", "base":"dev", "title":"New Prototypes", "body":"Generated new prototypes."}' \
-          "https://api.github.com/repos/${{ github.repository }}/pulls"
