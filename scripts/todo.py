@@ -2,6 +2,8 @@ import requests
 import json
 import os
 
+MODEL = "gpt-4-32k"
+
 def find_todos_in_file(file_path):
     todos = []
     with open(file_path, 'r') as f:
@@ -9,7 +11,7 @@ def find_todos_in_file(file_path):
             if '@TODO' in line:
                 # Prepare the payload
                 payload = {
-                    "model": "gpt-4-32k",
+                    "model": MODEL,
                     "messages": [
                         {"role": "system", "content": "Generates a suggested, expert-level completion of working python code to solve TODOs. Return all your results in .py files. DO NOT INCLUDE ANYTHING BUT EXECUTABLE PYTHON SCRIPT.\nCode context:\n" + str(f)},
                         {"role": "user", "content": f"TODO: {line}"}
