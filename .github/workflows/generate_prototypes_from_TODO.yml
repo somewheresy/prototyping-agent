@@ -1,8 +1,9 @@
-name: Generate Prototypes
+name: Generate Prototypes and Create PR
 
 on:
   push:
     branches:
+      - main
       - dev
 
 jobs:
@@ -11,9 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}  # checkout the branch that triggered the workflow
-          token: ${{ secrets.PAT }}
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -25,22 +24,20 @@ jobs:
           pip install requests
 
       - name: Run script
-        id: runscript
         run: python scripts/todo.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        continue-on-error: true
 
-      - name: Create Pull Request using curl
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and Push
         run: |
-          curl -s -X POST \
-          -H "Authorization: token $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/somewheresy/somewhere-prototyping-agent/pulls \
-          -d '{
-            "title": "Add prototypes based on @TODO",
-            "head": "prototyping",
-            "base": "dev"
-          }'
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "Add generated prototypes" || echo "No changes to commit."
+          git push origin HEAD:prototypes || echo "No changes to push."
+
+      - name: Create Pull Request
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d '{"head":"prototypes", "base":"main", "title":"New Prototypes", "body":"Generated new prototypes."}' \
+          "https://api.github.com/repos/${{ github.repository }}/pulls"
