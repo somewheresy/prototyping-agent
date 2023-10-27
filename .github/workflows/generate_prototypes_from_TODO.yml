@@ -31,6 +31,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git pull origin HEAD:prototypes
           git add -A
           git commit -m "Add generated prototypes" || echo "No changes to commit."
           git push origin HEAD:prototypes || echo "No changes to push."
