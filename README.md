@@ -2,7 +2,7 @@
 
 This project is designed to automatically generate Python code prototypes to solve TODOs in a codebase. It uses OpenAI's GPT-4 model to generate the prototypes. The project is structured as a Python script that can be run locally or as a GitHub Action.
 
-@TODO: test the feature and provide a Python program which adds 10 random numbers together. 
+@TODO: test the feature and provide a Python program which adds 10 random numbers together
 
 ## File Structure
 
