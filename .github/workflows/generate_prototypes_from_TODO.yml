@@ -24,11 +24,13 @@ jobs:
           pip install requests
 
       - name: Run script
+        id: runscript
         run: python scripts/todo.py
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        env: OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        continue-on-error: true
 
       - name: Create Pull Request
+        if: steps.runscript.outcome == 'success'
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Add generated prototypes
