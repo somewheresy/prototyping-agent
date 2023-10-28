@@ -50,7 +50,7 @@ def main():
         todos = {}
         for root, dirs, files in os.walk('.'):
             for file in files:
-                if file.endswith('.ts') or file == 'README.md':
+                if file.endswith('.py') or file == 'README.md':
                     file_path = os.path.join(root, file)
                     todos_in_file = find_todos_in_file(file_path)
                     if todos_in_file:
