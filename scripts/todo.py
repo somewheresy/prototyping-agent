@@ -27,8 +27,6 @@ def find_todos_in_file(file_path):
                     },
                     data=json.dumps(payload)
                 )
-
-                # Extract the prototype from the response
                 # Extract the prototype from the response
                 prototype = response.json()['choices'][0]['message']['content']
                 # Ensure the /prototypes directory exists
