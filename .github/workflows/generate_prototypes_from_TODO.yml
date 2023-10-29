@@ -3,7 +3,6 @@ name: Generate Prototypes and Create PR
 on:
   push:
     branches:
-      - main
       - dev
 
 jobs:
@@ -32,12 +31,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git pull origin HEAD:dev
           git add -A
           git commit -m "Add generated prototypes" || echo "No changes to commit."
-          git push origin HEAD:prototypes || echo "No changes to push."
-
-      - name: Create Pull Request
-        run: |
-          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -d '{"head":"prototypes", "base":"main", "title":"New Prototypes", "body":"Generated new prototypes."}' \
-          "https://api.github.com/repos/${{ github.repository }}/pulls"
+          git push origin HEAD:dev || echo "No changes to push."

@@ -21,4 +21,3 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-This script will walk through all directories starting from the current directory, and for each Python file, it will look for lines containing `@TODO`. For each such line, it will print the file path, the line number, and the line itself.
